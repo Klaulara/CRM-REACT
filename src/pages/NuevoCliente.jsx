@@ -11,6 +11,11 @@ export async function action({request}){
     errores.push('Todos los campos son obligatorios')
   }
 
+  let regex = new RegExp("([!#-'*+/-9=?A-Z^-~-]+(\.[!#-'*+/-9=?A-Z^-~-]+)*|\"\(\[\]!#-[^-~ \t]|(\\[\t -~]))+\")@([!#-'*+/-9=?A-Z^-~-]+(\.[!#-'*+/-9=?A-Z^-~-]+)*|\[[\t -Z^-~]*])");
+  if(!regex.test(email)){
+    errores.push('El email no es valido')
+  }
+
   if(Object.values(errores).length){
     return errores;
   }
@@ -40,7 +45,7 @@ const NuevoCliente = () => {
         {errores?.length && errores.map((error, i)=> <Error key={i}>{error}</Error>)}
         <Form
           method="post"
-
+          noValidate
         >
           <Formulario />
           <input
